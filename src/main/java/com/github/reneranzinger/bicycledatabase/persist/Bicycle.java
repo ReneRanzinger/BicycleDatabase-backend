@@ -1,5 +1,9 @@
 package com.github.reneranzinger.bicycledatabase.persist;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,41 +11,50 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "bicycle", uniqueConstraints = @UniqueConstraint(columnNames = { "brand", "model" }))
+@Table(name = "bicycle", uniqueConstraints = @UniqueConstraint(columnNames = { "brand_id",
+        "model" }))
 public class Bicycle
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "bicycle_id", nullable = false)
     private Long m_id;
-    @Column(name = "brand", nullable = false, length = 512)
-    private String m_brand;
+
     @Column(name = "model", nullable = false, length = 128)
     private String m_model;
+
     @Column(name = "color", nullable = false, length = 64)
     private String m_color;
+
     @Column(name = "register_number", nullable = false, length = 32)
     private String m_registerNumber;
+
     @Column(name = "year", nullable = false)
     private Integer m_year;
-    @Column(name = "price", nullable = false)
-    private Double m_price;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "bicycle_owner", joinColumns = {
+            @JoinColumn(name = "bicycle_id") }, inverseJoinColumns = {
+                    @JoinColumn(name = "owner_id") })
+    private Set<Owner> m_owners = new HashSet<Owner>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    private Owner m_owner;
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand m_brand;
 
     public Bicycle()
     {
     }
 
-    public Bicycle(String a_brand, String a_model, String a_color, String a_registerNumber,
-            Integer a_year, Double a_price, Owner a_owner)
+    public Bicycle(Brand a_brand, String a_model, String a_color, String a_registerNumber,
+            Integer a_year)
     {
         super();
         this.m_brand = a_brand;
@@ -49,16 +62,14 @@ public class Bicycle
         this.m_color = a_color;
         this.m_registerNumber = a_registerNumber;
         this.m_year = a_year;
-        this.m_price = a_price;
-        this.m_owner = a_owner;
     }
 
-    public String getBrand()
+    public Brand getBrand()
     {
         return this.m_brand;
     }
 
-    public void setBrand(String a_brand)
+    public void setBrand(Brand a_brand)
     {
         this.m_brand = a_brand;
     }
@@ -103,16 +114,6 @@ public class Bicycle
         this.m_year = a_year;
     }
 
-    public Double getPrice()
-    {
-        return this.m_price;
-    }
-
-    public void setPrice(Double a_price)
-    {
-        this.m_price = a_price;
-    }
-
     public Long getId()
     {
         return this.m_id;
@@ -123,14 +124,14 @@ public class Bicycle
         this.m_id = a_id;
     }
 
-    public Owner getOwner()
+    public Set<Owner> getOwners()
     {
-        return this.m_owner;
+        return this.m_owners;
     }
 
-    public void setOwner(Owner a_owner)
+    public void setOwners(Set<Owner> a_owners)
     {
-        this.m_owner = a_owner;
+        this.m_owners = a_owners;
     }
 
 }

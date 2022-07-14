@@ -1,14 +1,15 @@
 package com.github.reneranzinger.bicycledatabase.persist;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -21,13 +22,15 @@ public class Owner
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "owner_id", nullable = false)
     private Long m_id;
+
     @Column(name = "firstname", nullable = false, length = 32)
     private String m_firstname;
+
     @Column(name = "lastname", nullable = false, length = 32)
     private String m_lastname;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "m_owner")
-    private List<Bicycle> m_bicycle;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "m_owners")
+    private Set<Bicycle> m_bicycles = new HashSet<Bicycle>();
 
     public Owner()
     {
@@ -70,14 +73,14 @@ public class Owner
         this.m_lastname = a_lastname;
     }
 
-    public List<Bicycle> getBicycle()
+    public Set<Bicycle> getBicycle()
     {
-        return this.m_bicycle;
+        return this.m_bicycles;
     }
 
-    public void setBicycle(List<Bicycle> a_bicycle)
+    public void setBicycle(Set<Bicycle> a_bicycles)
     {
-        this.m_bicycle = a_bicycle;
+        this.m_bicycles = a_bicycles;
     }
 
 }
