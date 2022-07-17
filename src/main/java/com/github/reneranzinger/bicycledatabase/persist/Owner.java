@@ -13,7 +13,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "bicycles" })
 @Table(name = "owner", uniqueConstraints = @UniqueConstraint(columnNames = { "firstname",
         "lastname" }))
 public class Owner
@@ -43,12 +46,12 @@ public class Owner
         this.m_lastname = a_lastname;
     }
 
-    public long getOwnerid()
+    public long getId()
     {
         return this.m_id;
     }
 
-    public void setOwnerid(long a_id)
+    public void setId(long a_id)
     {
         this.m_id = a_id;
     }
@@ -73,12 +76,12 @@ public class Owner
         this.m_lastname = a_lastname;
     }
 
-    public Set<Bicycle> getBicycle()
+    public Set<Bicycle> getBicycles()
     {
         return this.m_bicycles;
     }
 
-    public void setBicycle(Set<Bicycle> a_bicycles)
+    public void setBicycles(Set<Bicycle> a_bicycles)
     {
         this.m_bicycles = a_bicycles;
     }

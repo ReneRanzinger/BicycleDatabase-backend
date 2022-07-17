@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  bicycle_mariadb:
+    image: mariadb:10.8.2
+    container_name: bicycle_mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - bicycle_db_data:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+    networks:
+      - bicycle_mariadb_network
+    restart: always
+  bicycle_phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: bicycle_phpmyadmin
+    ports:
+      - "3380:80"
+    environment:
+      - PMA_HOST=bicycle_mariadb
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+      - PMA_USER=root
+      - PMA_PASSWORD=${MARIADB_ROOT_PASSWORD}
+    networks:
+      - bicycle_mariadb_network
+    restart: always
+    depends_on:
+      - mariadb
+networks:
+  bicycle_mariadb_network:
+    driver: bridge
+volumes:
+  bicycle_db_data:
+    driver: local

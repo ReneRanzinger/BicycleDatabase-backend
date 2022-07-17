@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "bicycle" })
 @Table(name = "brand", uniqueConstraints = @UniqueConstraint(columnNames = { "name" }))
 public class Brand
 {
@@ -24,7 +28,7 @@ public class Brand
     @Column(name = "name", nullable = false, length = 64)
     private String m_name;
 
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "m_brand")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "m_brand", fetch = FetchType.LAZY)
     private List<Bicycle> m_bicycle;
 
     public Brand()

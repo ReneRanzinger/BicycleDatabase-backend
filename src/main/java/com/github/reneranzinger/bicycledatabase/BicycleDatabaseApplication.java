@@ -63,12 +63,6 @@ public class BicycleDatabaseApplication
 
             List<Bicycle> a = this.m_repositoryBicycle.findByModel("Escape");
 
-            Bicycle b = a.get(0);
-
-            for (Owner t_owner : b.getOwners())
-            {
-                System.out.println(t_owner.getFirstname());
-            }
         };
     }
 
