@@ -30,7 +30,7 @@ services:
       - bicycle_mariadb_network
     restart: always
     depends_on:
-      - mariadb
+      - bicycle_mariadb
 networks:
   bicycle_mariadb_network:
     driver: bridge
