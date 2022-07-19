@@ -1,7 +1,5 @@
 package com.github.reneranzinger.bicycledatabase;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -61,7 +59,7 @@ public class BicycleDatabaseApplication
             // t_owner2.getBicycle().remove(t_bike1);
             // this.m_repositoryBicycle.save(t_bike1);
 
-            List<Bicycle> a = this.m_repositoryBicycle.findByModel("Escape");
+            // List<Bicycle> a = this.m_repositoryBicycle.findByModel("Escape");
 
         };
     }

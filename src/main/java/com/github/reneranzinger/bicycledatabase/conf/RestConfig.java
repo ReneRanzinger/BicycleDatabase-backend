@@ -10,9 +10,9 @@ public class RestConfig implements RepositoryRestConfigurer
 {
 
     @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration restConfig,
-            CorsRegistry cors)
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration a_restConfig,
+            CorsRegistry a_cors)
     {
-        restConfig.setBasePath("/api");
+        a_restConfig.setBasePath("/api");
     }
 }
