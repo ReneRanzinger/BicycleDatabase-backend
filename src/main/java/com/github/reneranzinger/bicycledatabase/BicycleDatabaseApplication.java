@@ -12,6 +12,8 @@ import com.github.reneranzinger.bicycledatabase.persist.Brand;
 import com.github.reneranzinger.bicycledatabase.persist.BrandRepository;
 import com.github.reneranzinger.bicycledatabase.persist.Owner;
 import com.github.reneranzinger.bicycledatabase.persist.OwnerRepository;
+import com.github.reneranzinger.bicycledatabase.persist.User;
+import com.github.reneranzinger.bicycledatabase.persist.UserRepository;
 
 @SpringBootApplication
 public class BicycleDatabaseApplication
@@ -22,6 +24,8 @@ public class BicycleDatabaseApplication
     private OwnerRepository m_repositoryOwner;
     @Autowired
     private BrandRepository m_repositoryBrand;
+    @Autowired
+    private UserRepository m_repositoryUser;
 
     public static void main(String[] args)
     {
@@ -60,7 +64,12 @@ public class BicycleDatabaseApplication
             // this.m_repositoryBicycle.save(t_bike1);
 
             // List<Bicycle> a = this.m_repositoryBicycle.findByModel("Escape");
-
+            // user : user
+            this.m_repositoryUser.save(new User("user",
+                    "$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi", "USER"));
+            // admin : admin
+            this.m_repositoryUser.save(new User("admin",
+                    "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG", "ADMIN"));
         };
     }
 
