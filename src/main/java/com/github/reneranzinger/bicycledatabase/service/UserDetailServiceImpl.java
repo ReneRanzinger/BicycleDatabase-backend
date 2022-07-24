@@ -1,5 +1,7 @@
 package com.github.reneranzinger.bicycledatabase.service;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,7 @@ public class UserDetailServiceImpl implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String a_username) throws UsernameNotFoundException
     {
+        System.out.println("Make users");
         User currentUser = this.repository.findByUsername(a_username);
         UserDetails user = new org.springframework.security.core.userdetails.User(a_username,
                 currentUser.getPassword(), true, true, true, true,
@@ -26,4 +29,9 @@ public class UserDetailServiceImpl implements UserDetailsService
         return user;
     }
 
+    @PostConstruct
+    public void done()
+    {
+        System.out.println("Postconstruct of UserDetailsServiceImpl");
+    }
 }

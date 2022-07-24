@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import com.github.reneranzinger.bicycledatabase.persist.Bicycle;
@@ -29,7 +30,14 @@ public class BicycleDatabaseApplication
 
     public static void main(String[] args)
     {
-        SpringApplication.run(BicycleDatabaseApplication.class, args);
+        ConfigurableApplicationContext t_context = SpringApplication
+                .run(BicycleDatabaseApplication.class, args);
+
+        // print all registered bean names
+        for (String t_name : t_context.getBeanDefinitionNames())
+        {
+            // System.out.println(t_name);
+        }
     }
 
     @Bean
