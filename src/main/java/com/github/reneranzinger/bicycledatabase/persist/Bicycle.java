@@ -36,7 +36,7 @@ public class Bicycle
     @Column(name = "register_number", nullable = false, length = 32)
     private String m_registerNumber;
 
-    @Column(name = "year", nullable = false)
+    @Column(name = "fabrication_year", nullable = false)
     private Integer m_year;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
