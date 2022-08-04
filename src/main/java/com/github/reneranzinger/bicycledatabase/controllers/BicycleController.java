@@ -1,4 +1,4 @@
-package com.github.reneranzinger.bicycledatabase.web;
+package com.github.reneranzinger.bicycledatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
