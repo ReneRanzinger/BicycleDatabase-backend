@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.github.reneranzinger.bicycledatabase.web.BicycleController;
+import com.github.reneranzinger.bicycledatabase.controllers.BicycleController;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

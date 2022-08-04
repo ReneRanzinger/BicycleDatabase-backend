@@ -13,45 +13,53 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import com.knf.dev.security.jwt.AuthEntryPointJwt;
-import com.knf.dev.security.jwt.AuthTokenFilter;
-import com.knf.dev.security.services.UserDetailsServiceImpl;
+
+import com.github.reneranzinger.bicycledatabase.auth.jwt.AuthEntryPointJwt;
+import com.github.reneranzinger.bicycledatabase.auth.jwt.AuthTokenFilter;
+import com.github.reneranzinger.bicycledatabase.auth.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig {
-	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
-	@Autowired
-	UserDetailsServiceImpl userDetailsService;
+public class WebSecurityConfig
+{
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll().antMatchers("/api/test/**").permitAll().anyRequest()
-				.authenticated();
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
+    {
+        http.cors().and().csrf().disable().exceptionHandling()
+                .authenticationEntryPoint(this.unauthorizedHandler).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+                .antMatchers("/api/auth/**").permitAll().antMatchers("/api/test/**").permitAll()
+                .anyRequest().authenticated();
 
-		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(this.authenticationJwtTokenFilter(),
+                UsernamePasswordAuthenticationFilter.class);
 
-		return http.build();
-	}
+        return http.build();
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder()
+    {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public AuthTokenFilter authenticationJwtTokenFilter() {
-		return new AuthTokenFilter();
-	}
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter()
+    {
+        return new AuthTokenFilter();
+    }
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-			throws Exception {
-		return authenticationConfiguration.getAuthenticationManager();
-	}
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception
+    {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
 }

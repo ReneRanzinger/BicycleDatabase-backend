@@ -1,4 +1,4 @@
-package com.github.reneranzinger.bicycledatabase.auth.services;
+package com.github.reneranzinger.bicycledatabase.auth.model;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -7,44 +7,32 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.reneranzinger.bicycledatabase.persist.User;
 
 public class UserDetailsImpl implements UserDetails
 {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String username;
-
-    private String email;
-
     @JsonIgnore
     private String password;
 
-    public UserDetailsImpl(Long id, String username, String email, String password)
+    public UserDetailsImpl(Long id, String username, String password)
     {
         this.id = id;
         this.username = username;
-        this.email = email;
         this.password = password;
-
     }
 
     public static UserDetailsImpl build(User user)
     {
-
-        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(),
-                user.getPassword());
+        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getPassword());
     }
 
     public Long getId()
     {
         return this.id;
-    }
-
-    public String getEmail()
-    {
-        return this.email;
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.github.reneranzinger.bicycledatabase.persist.Bicycle;
 import com.github.reneranzinger.bicycledatabase.persist.BicycleRepository;
 
 @RestController
+@RequestMapping("/api/own")
 public class BicycleController
 {
     @Autowired
