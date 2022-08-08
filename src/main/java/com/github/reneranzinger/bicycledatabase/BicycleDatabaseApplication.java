@@ -74,10 +74,10 @@ public class BicycleDatabaseApplication
             // List<Bicycle> a = this.m_repositoryBicycle.findByModel("Escape");
             // user : user
             this.m_repositoryUser.save(new User("user",
-                    "$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi", "USER"));
+                    "$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi"));
             // admin : admin
             this.m_repositoryUser.save(new User("admin",
-                    "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG", "ADMIN"));
+                    "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG"));
         };
     }
 

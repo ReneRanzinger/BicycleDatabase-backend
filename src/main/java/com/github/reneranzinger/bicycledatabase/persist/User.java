@@ -1,10 +1,18 @@
 package com.github.reneranzinger.bicycledatabase.persist;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,19 +30,28 @@ public class User
     @Column(name = "password", nullable = false)
     private String m_password;
 
-    @Column(name = "role", nullable = false)
-    private String m_role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = {
+            @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    private Set<Role> m_roles = new HashSet<>();
 
     public User()
     {
     }
 
-    public User(String a_username, String a_password, String a_role)
+    public User(String a_username, String a_password, Set<Role> a_roles)
     {
         super();
         this.m_username = a_username;
         this.m_password = a_password;
-        this.m_role = a_role;
+        this.m_roles = a_roles;
+    }
+
+    public User(String a_username, String a_password)
+    {
+        super();
+        this.m_username = a_username;
+        this.m_password = a_password;
     }
 
     public Long getId()
@@ -67,13 +84,13 @@ public class User
         this.m_password = a_password;
     }
 
-    public String getRole()
+    public Set<Role> getRoles()
     {
-        return this.m_role;
+        return this.m_roles;
     }
 
-    public void setRole(String a_role)
+    public void setRole(Set<Role> a_roles)
     {
-        this.m_role = a_role;
+        this.m_roles = a_roles;
     }
 }
