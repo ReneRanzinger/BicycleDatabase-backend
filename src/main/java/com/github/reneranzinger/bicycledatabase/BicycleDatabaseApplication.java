@@ -16,6 +16,10 @@ import com.github.reneranzinger.bicycledatabase.persist.OwnerRepository;
 import com.github.reneranzinger.bicycledatabase.persist.User;
 import com.github.reneranzinger.bicycledatabase.persist.UserRepository;
 
+//https://www.youtube.com/watch?v=xEnvAAhMGu4
+//https://www.youtube.com/watch?v=VVn9OG9nfH0&t=364s
+// 42:20
+
 @SpringBootApplication
 public class BicycleDatabaseApplication
 {
