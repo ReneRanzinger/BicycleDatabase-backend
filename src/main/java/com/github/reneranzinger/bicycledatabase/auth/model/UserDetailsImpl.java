@@ -1,9 +1,11 @@
 package com.github.reneranzinger.bicycledatabase.auth.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,6 +19,7 @@ public class UserDetailsImpl implements UserDetails
     private String username;
     @JsonIgnore
     private String password;
+    private Collection<? extends GrantedAuthority> m_authorities = new ArrayList<>();
 
     public UserDetailsImpl(Long id, String username, String password)
     {
@@ -27,7 +30,14 @@ public class UserDetailsImpl implements UserDetails
 
     public static UserDetailsImpl build(User user)
     {
-        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getPassword());
+        UserDetailsImpl t_userDetails = new UserDetailsImpl(user.getId(), user.getUsername(),
+                user.getPassword());
+        Collection<SimpleGrantedAuthority> t_authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            t_authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        t_userDetails.setAuthorities(t_authorities);
+        return t_userDetails;
     }
 
     public Long getId()
@@ -85,7 +95,11 @@ public class UserDetailsImpl implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return this.m_authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> a_authorities)
+    {
+        this.m_authorities = a_authorities;
     }
 }

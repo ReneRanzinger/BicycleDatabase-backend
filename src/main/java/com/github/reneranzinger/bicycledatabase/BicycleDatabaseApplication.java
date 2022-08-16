@@ -13,10 +13,14 @@ import com.github.reneranzinger.bicycledatabase.persist.Brand;
 import com.github.reneranzinger.bicycledatabase.persist.BrandRepository;
 import com.github.reneranzinger.bicycledatabase.persist.Owner;
 import com.github.reneranzinger.bicycledatabase.persist.OwnerRepository;
+import com.github.reneranzinger.bicycledatabase.persist.Role;
+import com.github.reneranzinger.bicycledatabase.persist.RoleRepository;
 import com.github.reneranzinger.bicycledatabase.persist.User;
 import com.github.reneranzinger.bicycledatabase.persist.UserRepository;
+import com.github.reneranzinger.bicycledatabase.service.UserService;
 
 //https://www.youtube.com/watch?v=xEnvAAhMGu4
+//https://www.youtube.com/watch?v=BnknNTN8icw
 //https://www.youtube.com/watch?v=VVn9OG9nfH0&t=364s
 // 42:20
 
@@ -31,6 +35,10 @@ public class BicycleDatabaseApplication
     private BrandRepository m_repositoryBrand;
     @Autowired
     private UserRepository m_repositoryUser;
+    @Autowired
+    private RoleRepository m_repositoryRole;
+    @Autowired
+    private UserService m_userService;
 
     public static void main(String[] args)
     {
@@ -82,6 +90,18 @@ public class BicycleDatabaseApplication
             // admin : admin
             this.m_repositoryUser.save(new User("admin",
                     "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG"));
+
+            this.m_repositoryRole.save(new Role(null, "ROLE_USER"));
+            this.m_repositoryRole.save(new Role(null, "ROLE_MANAGER"));
+            this.m_repositoryRole.save(new Role(null, "ROLE_ADMIN"));
+            this.m_repositoryRole.save(new Role(null, "ROLE_SUPER_ADMIN"));
+
+            this.m_userService.addRoleToUser("user", "ROLE_USER");
+            this.m_userService.addRoleToUser("user", "ROLE_MANAGER");
+            this.m_userService.addRoleToUser("admin", "ROLE_MANAGER");
+            this.m_userService.addRoleToUser("admin", "ROLE_ADMIN");
+            this.m_userService.addRoleToUser("admin", "ROLE_SUPER_ADMIN");
+
         };
     }
 

@@ -1,15 +1,10 @@
 package com.github.reneranzinger.bicycledatabase.persist;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,8 +19,17 @@ public class Role
     @Column(name = "name", nullable = false, unique = true)
     private String m_name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "m_roles")
-    private Set<User> m_users = new HashSet<User>();
+    public Role()
+    {
+        super();
+    }
+
+    public Role(Long a_id, String a_name)
+    {
+        super();
+        this.m_id = a_id;
+        this.m_name = a_name;
+    }
 
     public Long getId()
     {
@@ -45,16 +49,6 @@ public class Role
     public void setName(String a_name)
     {
         this.m_name = a_name;
-    }
-
-    public Set<User> getUsers()
-    {
-        return this.m_users;
-    }
-
-    public void setUsers(Set<User> a_users)
-    {
-        this.m_users = a_users;
     }
 
 }
