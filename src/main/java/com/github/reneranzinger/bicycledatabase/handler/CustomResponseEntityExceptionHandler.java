@@ -22,6 +22,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler(value = { ObjectNotFoundException.class, EntityNotFoundException.class })
     public ResponseEntity<Object> handleCustomException(Exception ex, WebRequest request)
     {
+        logger.info("CustomResponseEntityExceptionHandler::handleCustomException");
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = HttpStatus.NOT_FOUND;
 

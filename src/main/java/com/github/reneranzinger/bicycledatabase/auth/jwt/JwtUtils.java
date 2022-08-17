@@ -28,6 +28,7 @@ public class JwtUtils
 
     public boolean validateJwtToken(String authToken)
     {
+        logger.info("JwtUtils::validateJwtToken");
         try
         {
             Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(authToken);
@@ -53,13 +54,12 @@ public class JwtUtils
         {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
-
         return false;
     }
 
     public String generateJwtToken(Authentication authentication)
     {
-
+        logger.info("JwtUtils::generateJwtToken");
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
@@ -69,6 +69,7 @@ public class JwtUtils
 
     public String getSubjectFromJwtToken(String token)
     {
+        logger.info("JwtUtils::getSubjectFromJwtToken");
         return Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(token).getBody()
                 .getSubject();
     }

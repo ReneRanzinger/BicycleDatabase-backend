@@ -16,7 +16,7 @@ import com.github.reneranzinger.bicycledatabase.persist.UserRepository;
 @Transactional
 public class UserServiceImpl implements UserService
 {
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository m_repoUser;
@@ -26,21 +26,21 @@ public class UserServiceImpl implements UserService
     @Override
     public User saveUser(User a_user)
     {
-        log.info("Save new user: {}", a_user.getUsername());
+        logger.info("Save new user: {}", a_user.getUsername());
         return this.m_repoUser.save(a_user);
     }
 
     @Override
     public Role saveRole(Role a_role)
     {
-        log.info("Save new role: {}", a_role.getName());
+        logger.info("Save new role: {}", a_role.getName());
         return this.m_repoRole.save(a_role);
     }
 
     @Override
     public void addRoleToUser(String a_username, String a_roleName)
     {
-        log.info("Adding role {} to user {}", a_roleName, a_username);
+        logger.info("Adding role {} to user {}", a_roleName, a_username);
 
         User t_user = this.m_repoUser.findByUsername(a_username);
         Role t_role = this.m_repoRole.findByName(a_roleName);
@@ -51,14 +51,14 @@ public class UserServiceImpl implements UserService
     @Override
     public User getUser(String a_username)
     {
-        log.info("Retrieving user with name {}", a_username);
+        logger.info("Retrieving user with name {}", a_username);
         return this.m_repoUser.findByUsername(a_username);
     }
 
     @Override
     public Iterable<User> getUsers()
     {
-        log.info("Fetching all user");
+        logger.info("Fetching all user");
         return this.m_repoUser.findAll();
     }
 

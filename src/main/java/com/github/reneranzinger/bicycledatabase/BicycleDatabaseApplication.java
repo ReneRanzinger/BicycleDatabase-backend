@@ -1,5 +1,7 @@
 package com.github.reneranzinger.bicycledatabase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +29,8 @@ import com.github.reneranzinger.bicycledatabase.service.UserService;
 @SpringBootApplication
 public class BicycleDatabaseApplication
 {
+    private static final Logger logger = LoggerFactory.getLogger(BicycleDatabaseApplication.class);
+
     @Autowired
     private BicycleRepository m_repositoryBicycle;
     @Autowired
@@ -42,6 +46,7 @@ public class BicycleDatabaseApplication
 
     public static void main(String[] args)
     {
+        logger.info("Starting BicycleDatabaseApplication::main");
         ConfigurableApplicationContext t_context = SpringApplication
                 .run(BicycleDatabaseApplication.class, args);
 
@@ -50,12 +55,14 @@ public class BicycleDatabaseApplication
         {
             // System.out.println(t_name);
         }
+        logger.info("Ending BicycleDatabaseApplication::main");
     }
 
     @Bean
     CommandLineRunner runner()
     {
         return args -> {
+            logger.info("Starting CommandLineRunner");
             Owner t_owner1 = new Owner("John", "Doe");
             Owner t_owner2 = new Owner("Jane", "Doe");
             t_owner1 = this.m_repositoryOwner.save(t_owner1);

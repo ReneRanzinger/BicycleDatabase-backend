@@ -17,7 +17,7 @@ import com.github.reneranzinger.bicycledatabase.persist.UserRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService
 {
-    private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     UserRepository userRepository;
@@ -26,10 +26,11 @@ public class UserDetailsServiceImpl implements UserDetailsService
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
+        logger.info("UserDetailsServiceImpl::loadUserByUsername");
         User user = this.userRepository.findByUsername(username);
         if (user == null)
         {
-            log.info("User not found with username: " + username);
+            logger.info("User not found with username: " + username);
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
         // TODO validation

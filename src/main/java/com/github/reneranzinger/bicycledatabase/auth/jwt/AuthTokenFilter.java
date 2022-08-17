@@ -33,6 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException
     {
+        logger.info("AuthTokenFilter::doFilterInternal");
         try
         {
             String jwt = this.parseJwt(request);

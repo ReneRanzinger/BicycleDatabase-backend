@@ -1,5 +1,7 @@
 package com.github.reneranzinger.bicycledatabase.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,8 @@ import com.github.reneranzinger.bicycledatabase.auth.services.UserDetailsService
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig
 {
+    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
     @Autowired
@@ -31,12 +35,14 @@ public class WebSecurityConfig
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
+        logger.info("WebSecurityConfig::filterChain");
         http.cors().and().csrf().disable().exceptionHandling()
                 .authenticationEntryPoint(this.unauthorizedHandler).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll().antMatchers("/api/test/**").permitAll()
                 .antMatchers("/api/user/**").permitAll().anyRequest().authenticated();
 
+        // TODO does that need to be a bean?
         http.addFilterBefore(this.authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
 
@@ -46,12 +52,14 @@ public class WebSecurityConfig
     @Bean
     public PasswordEncoder passwordEncoder()
     {
+        logger.info("WebSecurityConfig::authenticationJwtTokenFilter");
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter()
     {
+        logger.info("WebSecurityConfig::authenticationJwtTokenFilter");
         return new AuthTokenFilter();
     }
 
@@ -59,6 +67,7 @@ public class WebSecurityConfig
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception
     {
+        logger.info("WebSecurityConfig::authenticationManager");
         return authenticationConfiguration.getAuthenticationManager();
     }
 

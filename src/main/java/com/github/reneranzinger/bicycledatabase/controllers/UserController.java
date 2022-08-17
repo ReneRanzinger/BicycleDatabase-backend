@@ -2,6 +2,8 @@ package com.github.reneranzinger.bicycledatabase.controllers;
 
 import java.net.URI;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,12 +23,15 @@ import com.github.reneranzinger.bicycledatabase.service.UserService;
 @RequestMapping("/api/user")
 public class UserController
 {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService m_userService;
 
     @GetMapping("/list")
     public ResponseEntity<Iterable<User>> getUsers()
     {
+        logger.info("UserController::getUsers");
         return ResponseEntity.ok(this.m_userService.getUsers());
     }
 
